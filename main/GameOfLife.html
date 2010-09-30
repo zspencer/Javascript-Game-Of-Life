@@ -2,7 +2,16 @@
     <head>
         <script src="../main/scripts/jquery.js"></script>
         <script src="js/GameOfLife.js"></script>
+		<script src="js/World.js"></script>
 		<script src="js/GameOfLifeView.js"></script>
+		
+		<script>
+			jQuery.ready(function() {
+				var game = Game.create();
+				game.run();	
+			});
+			
+		</script>
     </head>
     <body>
     </body>

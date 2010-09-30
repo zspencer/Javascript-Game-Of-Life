@@ -1,5 +1,5 @@
 var World = (function(){
-	var World = function() {}
+	var WorldObject = function() {}
     var prototype = {
         spawn: function(x, y){
             this.initializeRow(x);
@@ -7,7 +7,7 @@ var World = (function(){
         },
         isPopulatedAt: function(x, y){
             this.initializeRow(x);
-            return this.cells[x][y] == undefined ? false : true;
+            return (!this.cells[x][y]) ? false : true; 
         },
         initializeRow: function(x){
             if (this.cells[x] == null) {
@@ -16,63 +16,81 @@ var World = (function(){
         },
         cellShouldLive: function(x, y){
             var neighborCount = this.countNeighbors(x, y);
-            if (neighborCount < 2 || neighborCount > 3) {
-                return false;
-            }
-            return true;
+            if (neighborCount < 2 || neighborCount > 3) { return false; }
+			if (neighborCount == 3) { return true;}
+            return this.isPopulatedAt(x,y);
         },
+		evolve: function() {
+			var newWorld = World.create();
+			this.trace();
+			var world = this;
+			jQuery.each(world.cells, function(x, row){
+                jQuery.each(row, function(y, lives){
+                    if (world.cellShouldLive(x, y)) {
+						newWorld.spawn(x, y);
+					}
+                });
+            });
+			this.cells = newWorld.cells;
+		},
 		getNeighbors: function(x, y) {
 			x = parseInt(x); y = parseInt(y);
-			var neighbors = {};
+			var neighbors = World.create();
 			var currentX = x-1;
 			while(currentX<=x+1) {
 				var currentY = y-1;
 				while(currentY<=y+1) {
-					if(neighbors[currentX] == undefined) { neighbors[currentX] = {}; }
-					neighbors[currentX][currentY] = this.isPopulatedAt(currentX, currentY);
+					neighbors.setCell(currentX,currentY,this.isPopulatedAt(currentX, currentY));
 					currentY++;
 				}
 				currentX++;
 			}
-			return neighbors;
+			return neighbors.cells;
+		},
+		setCell: function(x,y,life) {
+			this.initializeRow(x);
+			this.cells[x][y]= life;
+		},
+		cellsAreAtTheSameLocation: function(x1,y1,x2,y2) {
+			return (x1==x2 && y1 == y2);
+		},
+		shouldIncrementNeighborCount: function(x,y, currentX, currentY) {
+			return !this.cellsAreAtTheSameLocation(x,y, currentX, currentY) && this.isPopulatedAt(currentX, currentY)
 		},
         countNeighbors: function(x, y){
 			x = parseInt(x); y = parseInt(y);
-            var count = 0;
-            if (this.isPopulatedAt(x - 1, y)) {
-                count++;
-            }
-            if (this.isPopulatedAt(x - 1, y + 1)) {
-                count++;
-            }
-            if (this.isPopulatedAt(x - 1, y - 1)) {
-                count++;
-            }
-            if (this.isPopulatedAt(x, y + 1)) {
-                count++;
-            }
-            if (this.isPopulatedAt(x, y - 1)) {
-                count++;
-            }
-            if (this.isPopulatedAt(x + 1, y - 1)) {
-                count++;
-            }
-            if (this.isPopulatedAt(x + 1, y)) {
-                count++;
-            }
-            if (this.isPopulatedAt(x + 1, y + 1)) {
-                count++;
-            }
+			var count = 0;
+			var currentX = x - 1; 
+			while (currentX <= x + 1) {
+				var currentY = y -1;
+				while (currentY <= y + 1) {
+					if (this.shouldIncrementNeighborCount(x,y,currentX,currentY)) {
+						count++;
+					}
+					currentY++;
+				}
+				currentX++;
+			}            
             return count;
         },
+		trace: function() {
+			var world = this;
+			jQuery.each(world.cells, function(x, row){
+                jQuery.each(row, function(y, lives){
+                    var neighbors = world.getNeighbors(x, y);
+					jQuery.extend(true, world.cells, neighbors);
+                });
+            });
+			this.cells = world.cells;
+		},
 		init: function() {
 			this.cells = {};
 		}
     };
 	return {
 		create: function() {
-			World.prototype = prototype;
-			var world = new World(); 
+			WorldObject.prototype = prototype;
+			var world = new WorldObject(); 
 			world.init();
 			return world;
 		}
