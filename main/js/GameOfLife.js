@@ -10,7 +10,7 @@ var Game = (function(){
 			this.world.spawn(4,3);
 			this.world.spawn(4,4);
 			
-			this.view = GameView.create('100%', '100%');
+			this.view = GameView.create(400, 400);
 		},
 		run: function() {
 			setInterval("this.tick()", 500);
