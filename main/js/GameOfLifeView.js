@@ -6,7 +6,7 @@ var GameView = (function(){
         
         render: function(world){
 			if(world.cells == undefined) { return; }
-            this.context = this.canvas[0].getContext('2d');
+			this.clear();
             view = this;
             jQuery.each(world.cells, function(x, row){
                 jQuery.each(row, function(y, lives){
@@ -16,24 +16,32 @@ var GameView = (function(){
             
         },
         cellIsAt: function(x, y){
-            var context = this.canvas[0].getContext('2d');
-            var cell = context.getImageData(x*CELL_SIZE, y*CELL_SIZE, CELL_SIZE, CELL_SIZE).data;
+            var cell = this.context.getImageData(x*CELL_SIZE, y*CELL_SIZE, CELL_SIZE, CELL_SIZE).data;
             return cell[1] == 255;
         },
 		drawCell: function(x,y) {
 			this.context.fillStyle = "#0F0";
 			this.context.fillRect(x*CELL_SIZE, y*CELL_SIZE, CELL_SIZE, CELL_SIZE)
-		}, 
-		init: function() {
+		},
+		clear: function() {
+			this.context.fillStyle="#000";
+			this.context.fillRect(0,0,this.height,this.width);
+		},
+		init: function(height, width) {
 			this.canvas  = $("canvas#gameBoard");
+			this.height = height;
+			this.width = width;
+			this.canvas.attr('height', height);
+			this.canvas.attr('width', width);
+			this.context = this.canvas[0].getContext('2d');
 		}
         
     }
 	return {
-		create: function() {
+		create: function(height, width) {
 			GameViewObject.prototype = prototype;
 		var object = new GameViewObject();
-		object.init();
+		object.init(200, 200);
 		return object;	
 		}
 		

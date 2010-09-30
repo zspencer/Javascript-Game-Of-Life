@@ -2,9 +2,11 @@ var World = (function(){
 	var WorldObject = function() {}
     var prototype = {
         spawn: function(x, y){
-            this.initializeRow(x);
-            this.cells[x][y] = true;
+            this.setCell(x,y,true);
         },
+		kill: function(x,y) {
+			this.setCell(x,y, false);
+		},
         isPopulatedAt: function(x, y){
             this.initializeRow(x);
             return (!this.cells[x][y]) ? false : true; 

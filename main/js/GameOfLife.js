@@ -4,10 +4,13 @@ var Game = (function(){
     var prototype = {
 		init: function() {
 			this.world = World.create();
-			world.spawn(3,3);
-			world.spawn(3,4);
-			world.spawn(3,5);
-			this.view = GameView.create();
+			this.world.spawn(2,3);
+			this.world.spawn(3,4);
+			this.world.spawn(4,2);
+			this.world.spawn(4,3);
+			this.world.spawn(4,4);
+			
+			this.view = GameView.create('100%', '100%');
 		},
 		run: function() {
 			setInterval("this.tick()", 500);

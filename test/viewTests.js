@@ -18,7 +18,13 @@
 		view.render(world);
 		ok(!view.cellIsAt(1,6));
 	});
-	
+	test('clears the game board', function() {
+		var view = GameView.create();
+		var world = World.create();
+		expect(1);
+		view.clear = function() { ok(true)}
+		view.render(world);
+	})
 	
 	
 });

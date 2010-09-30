@@ -6,13 +6,14 @@
 		<script src="js/GameOfLifeView.js"></script>
 		
 		<script>
-			jQuery.ready(function() {
-				var game = Game.create();
-				game.run();	
+			jQuery().ready(function() {
+				game = Game.create();
+				setInterval("game.tick()", 250);
 			});
 			
 		</script>
     </head>
     <body>
+    	<canvas id="gameBoard" height = "200" width="200"></canvas>
     </body>
 </html>
