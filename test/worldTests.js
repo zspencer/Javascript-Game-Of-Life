@@ -1,4 +1,4 @@
- jQuery().ready(function() {
+ require.def(['World'],function(World) {
 	
 	module('world countNeighbors');
 	

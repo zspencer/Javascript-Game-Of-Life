@@ -1,4 +1,4 @@
-var GameView = (function(){
+require.def(function(){
     var CELL_SIZE = 5;
     var GameViewObject = function(){
     };
@@ -51,4 +51,4 @@ var GameView = (function(){
         }
         
     }
-})();
+});

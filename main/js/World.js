@@ -1,4 +1,4 @@
-var World = (function(){
+require.def(function(){
 	var WorldObject = function() {}
     var prototype = {
         spawn: function(x, y){
@@ -23,7 +23,7 @@ var World = (function(){
             return this.isPopulatedAt(x,y);
         },
 		evolve: function() {
-			var newWorld = World.create();
+			var newWorld = WorldObject.create();
 			this.trace();
 			var world = this;
 			jQuery.each(world.cells, function(x, row){
@@ -37,7 +37,7 @@ var World = (function(){
 		},
 		getNeighbors: function(x, y) {
 			x = parseInt(x); y = parseInt(y);
-			var neighbors = World.create();
+			var neighbors = WorldObject.create();
 			var currentX = x-1;
 			while(currentX<=x+1) {
 				var currentY = y-1;
@@ -89,12 +89,11 @@ var World = (function(){
 			this.cells = {};
 		}
     };
-	return {
-		create: function() {
-			WorldObject.prototype = prototype;
-			var world = new WorldObject(); 
+	WorldObject.prototype = prototype;
+	WorldObject.create = function() {
+		var world = new WorldObject(); 
 			world.init();
 			return world;
-		}
 	}
-})();
+	return WorldObject
+});

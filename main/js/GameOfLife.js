@@ -1,4 +1,4 @@
-var Game = (function(){
+require.def(['GameOfLifeView','World'], function(GameView, World){
 	var Game = function() {}
 
     var prototype = {
@@ -20,13 +20,13 @@ var Game = (function(){
 			this.view.render(this.world);
 		}  
     }
+	Game.prototype = prototype;
     return {
         create: function(){
-			Game.prototype = prototype;
 			var game = new Game(); 
 			game.init();
             return game;
         }
     };
-})();
+});
 

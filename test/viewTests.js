@@ -1,4 +1,4 @@
- jQuery().ready(function() {
+ require.def(['GameOfLifeView', 'World'],function(GameView, World) {
 	module('canvas');
 	test('exists', function() {
 		var view = GameView.create();
