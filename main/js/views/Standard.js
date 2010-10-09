@@ -4,7 +4,8 @@ require.def(function(){
     };
     var prototype = {
         context: null,
-        
+        backgroundColor: "#000",
+		foregroundColor: "#0F0",
         render: function(cells){
             if (cells == undefined) {
                 return;
@@ -23,11 +24,11 @@ require.def(function(){
             return cell[1] == 255;
         },
         drawCell: function(x, y){
-            this.context.fillStyle = "#0F0";
+            this.context.fillStyle = this.foregroundColor;
             this.context.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
         },
         clear: function(){
-            this.context.fillStyle = "#000";
+            this.context.fillStyle = this.backgroundColor;
             this.context.fillRect(0, 0, this.height, this.width);
         },
         init: function(locator, height, width){

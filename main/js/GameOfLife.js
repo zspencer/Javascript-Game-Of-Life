@@ -1,4 +1,4 @@
-require.def(['GameOfLifeView','World'], function(GameView, World){
+require.def(['views/Standard','World'], function(GameView, World){
 	var Game = function() {}
     var prototype = {
 		settings: {
