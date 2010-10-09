@@ -5,7 +5,7 @@ require({
 	['GameOfLife'],
 	function(Game) {
 		require.ready(function() {
-			game = Game.create();
-			game.run();
+			game = Game.create('#gameBoard');
+			setInterval("game.tick()", 100);
 		});
 	});

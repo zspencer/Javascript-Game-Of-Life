@@ -17,9 +17,6 @@ require.def(['GameOfLifeView','World'], function(GameView, World){
 										this.settings.height,
 										this.settings.width);
 		},
-		run: function() {
-			setInterval("this.tick()", 500);
-		},
 		tick: function() {
 			this.world.evolve();
 			this.view.render(this.world.cells);
