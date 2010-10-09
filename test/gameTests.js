@@ -18,7 +18,7 @@ require.def(['GameOfLife'],function(Game) {
 	test('renders the world', function() {
 		var game = Game.create();
 		expect(1);
-		game.view.render = function(world) { equals(game.world, world);}
+		game.view.render = function(world) { equals(game.world.cells, world);}
 		game.tick();
 	});
 });

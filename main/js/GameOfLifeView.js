@@ -5,13 +5,13 @@ require.def(function(){
     var prototype = {
         context: null,
         
-        render: function(world){
-            if (world.cells == undefined) {
+        render: function(cells){
+            if (cells == undefined) {
                 return;
             }
             this.clear();
             view = this;
-            jQuery.each(world.cells, function(x, row){
+            jQuery.each(cells, function(x, row){
                 jQuery.each(row, function(y, lives){
                     view.drawCell(x, y);
                 });
@@ -30,8 +30,8 @@ require.def(function(){
             this.context.fillStyle = "#000";
             this.context.fillRect(0, 0, this.height, this.width);
         },
-        init: function(height, width){
-            this.canvas = $("canvas#gameBoard");
+        init: function(locator, height, width){
+            this.canvas = $(locator);
             this.height = height;
             this.width = width;
             this.canvas.attr('height', height);
@@ -40,13 +40,18 @@ require.def(function(){
         }
         
     }
+    GameViewObject.prototype = prototype;
     return {
-        create: function(height, width){
+        create: function(canvasLocator, height, width){
+            if (canvasLocator == null) {
+                throw "Must give us a selector to get the canvas object";
+            }
+            
             height = height == null ? 200 : height;
             width = width == null ? 200 : width;
-            GameViewObject.prototype = prototype;
+            
             var object = new GameViewObject();
-            object.init(height, width);
+            object.init(canvasLocator, height, width);
             return object;
         }
         
