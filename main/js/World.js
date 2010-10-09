@@ -27,22 +27,27 @@ require.def(function(){
             }
             return this.isPopulatedAt(x, y);
         },
-        evolve: function(){
-            var newWorld = WorldObject.create();
-            this.trace();
-            var world = this;
-            jQuery.each(world.cells, function(x, row){
-                jQuery.each(row, function(y, lives){
-                    if (world.cellShouldLive(x, y)) {
-                        newWorld.spawn(x, y);
-                    }
+        visitCells: function(callback){
+            jQuery.each(this.cells, function(x, row){
+                jQuery.each(row, function(y, status){
+					callback(x,y);
                 });
             });
-            this.cells = newWorld.cells;
+        },
+        evolve: function(){
+            this.trace();
+            var self = this;
+			var newWorld = WorldObject.create();
+            self.visitCells(function(x, y) {
+            	if(self.cellShouldLive(x,y)) {
+					newWorld.spawn(x,y);
+				}
+            });
+			self.cells = newWorld.cells;
         },
         getNeighbors: function(x, y){
             var neighbors = WorldObject.create();
-			var self = this;
+            var self = this;
             this.visitAdjacentCells(x, y, function(adjacentX, adjacentY){
                 neighbors.setCell(adjacentX, adjacentY, self.isPopulatedAt(adjacentX, adjacentY));
             });
@@ -59,7 +64,8 @@ require.def(function(){
             return !this.cellsAreAtTheSameLocation(x, y, currentX, currentY) && this.isPopulatedAt(currentX, currentY)
         },
         visitAdjacentCells: function(x, y, callback){
-            x = parseInt(x); y = parseInt(y);
+            x = parseInt(x);
+            y = parseInt(y);
             var currentX = x - 1;
             while (currentX <= x + 1) {
                 var currentY = y - 1;
@@ -75,19 +81,17 @@ require.def(function(){
             var self = this;
             self.visitAdjacentCells(x, y, function(adjacentX, adjacentY){
                 if (self.shouldIncrementNeighborCount(x, y, adjacentX, adjacentY)) {
-					count++;
-				}
-			});
+                    count++;
+                }
+            });
             return count;
         },
         trace: function(){
             var world = this;
-            jQuery.each(world.cells, function(x, row){
-                jQuery.each(row, function(y, lives){
-                    var neighbors = world.getNeighbors(x, y);
-                    jQuery.extend(true, world.cells, neighbors);
-                });
-            });
+			this.visitCells(function(x,y) {
+				var neighbors = world.getNeighbors(x, y);
+                jQuery.extend(true, world.cells, neighbors);
+			})
             this.cells = world.cells;
         },
         init: function(){
