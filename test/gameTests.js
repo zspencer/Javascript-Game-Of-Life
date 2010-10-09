@@ -8,11 +8,15 @@ require.def(['GameOfLife'],function(Game) {
 			equals(e,'We need to know which canvas to use!');
 		}
 	});
-	test('has a world', function() {
+	test('view has the canvas to the locator that is passed into it', function() {
+		var game= Game.create('#asdf');
+		equals(game.view.canvas.selector,'#asdf');
+	});
+	test('sets the world', function() {
 		var game = Game.create('#gameBoard');
 		ok(game.world);
 	});
-	test('has a view', function() {
+	test('sets the view', function() {
 		var game = Game.create('#gameBoard');
 		ok(game.view);
 	});
