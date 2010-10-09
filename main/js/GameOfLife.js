@@ -28,7 +28,8 @@ require.def(['GameOfLifeView','World'], function(GameView, World){
     }
 	Game.prototype = prototype;
     return {
-        create: function(){
+        create: function(canvasLocator){
+			if(canvasLocator == null) { throw 'We need to know which canvas to use!'; }
 			var game = new Game(); 
 			game.init();
             return game;
