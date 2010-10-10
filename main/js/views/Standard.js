@@ -1,5 +1,5 @@
 require.def(function(){
-    var CELL_SIZE = 5;
+    var CELL_SIZE = 10;
     var GameViewObject = function(){
     };
     var prototype = {
@@ -29,7 +29,7 @@ require.def(function(){
         },
         clear: function(){
             this.context.fillStyle = this.backgroundColor;
-            this.context.fillRect(0, 0, this.height, this.width);
+            this.context.fillRect(0, 0, this.width, this.height);
         },
         init: function(locator, height, width){
             this.canvas = $(locator);
@@ -48,8 +48,8 @@ require.def(function(){
                 throw "Must give us a selector to get the canvas object";
             }
             
-            height = height == null ? 200 : height;
-            width = width == null ? 200 : width;
+            height = height == null ? 200 : height*CELL_SIZE;
+            width = width == null ? 200 : width*CELL_SIZE;
             
             var object = new GameViewObject();
             object.init(canvasLocator, height, width);

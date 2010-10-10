@@ -2,16 +2,13 @@ require.def(['views/Standard','World'], function(GameView, World){
 	var Game = function() {}
     var prototype = {
 		settings: {
-			height: 400,
-			width: 400,
+			height: 72,
+			width: 96,
 		},
 		init: function(canvasLocator) {
 			this.world = World.create();
-			this.world.spawn(2,3);
-			this.world.spawn(3,4);
-			this.world.spawn(4,2);
-			this.world.spawn(4,3);
-			this.world.spawn(4,4);
+			
+			this.world.randomize(this.settings.height, this.settings.width);
 			
 			this.view = GameView.create(canvasLocator,
 										this.settings.height,

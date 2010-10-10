@@ -17,6 +17,19 @@ require.def(function(){
                 this.cells[x] = {};
             }
         },
+		randomize: function(height, width) {
+			var x = 10; var y =10;
+			while(x < width-10) {
+				while(y < height-10) {
+					if(Math.floor(Math.random()*2)==1) {
+						this.spawn(x,y);
+					}				
+					y++;
+				}
+				y=10;
+				x++;
+			}
+		},
         cellShouldLive: function(x, y){
             var neighborCount = this.countNeighbors(x, y);
             if (neighborCount < 2 || neighborCount > 3) {
@@ -28,11 +41,11 @@ require.def(function(){
             return this.isPopulatedAt(x, y);
         },
         visitCells: function(callback){
-            jQuery.each(this.cells, function(x, row){
-                jQuery.each(row, function(y, status){
+			for(var x in this.cells) {
+				for(var y in this.cells[x]) {
 					callback(x,y);
-                });
-            });
+				}
+			}
         },
         evolve: function(){
             this.trace();
