@@ -2,8 +2,8 @@ require.def(['views/Standard','World'], function(GameView, World){
 	var Game = function() {}
     var prototype = {
 		settings: {
-			height: 360,
-			width: 480,
+			height: 225,
+			width: 360,
 		},
 		init: function(canvasLocator) {
 			this.world = World.create();
@@ -11,6 +11,7 @@ require.def(['views/Standard','World'], function(GameView, World){
 										this.settings.height,
 										this.settings.width);
 		},
+	
 		evolve: function(){
 			var self = this;
 			var newWorld = World.create();

@@ -7,8 +7,7 @@ require({
 	}, 
 	['tests/gameTests',
 	 'tests/viewTests',
-	 'tests/worldTests',
-	 'tests/cellTests'
+	 'tests/worldTests'
 	 ]
 );
 

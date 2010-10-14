@@ -1,5 +1,5 @@
 require.def(function(){
-    var CELL_SIZE = 2;
+    var CELL_SIZE = 4;
     var GameViewObject = function(){
     };
     var prototype = {
