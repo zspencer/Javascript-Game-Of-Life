@@ -6,6 +6,6 @@ require({
 	function(Game) {
 		require.ready(function() {
 			game = Game.create('#gameBoard');
-			setInterval("game.tick()", 100);
+			game.run();
 		});
 	});

@@ -9,3 +9,5 @@ require({
 	 'tests/viewTests',
 	 'tests/worldTests']
 );
+
+setInterval = function() { }

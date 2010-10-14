@@ -18,7 +18,7 @@
 		var view = GameView.create("#gameBoard");
 		var world = World.create();
 		world.spawn(3,5);
-		view.render(world.cells);
+		view.render(world);
 		ok(view.cellIsAt(3,5));
 	});
 	test('does not draw a pixel at 1,6 when a game doesn\'t have a cell at 1,6', function() {
@@ -31,7 +31,7 @@
 		var world = World.create();
 		expect(1);
 		view.clear = function() { ok(true)}
-		view.render(world.cells);
+		view.render(world);
 	})
 	
 	

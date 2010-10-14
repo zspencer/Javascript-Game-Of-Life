@@ -101,51 +101,7 @@
 		var world = World.create();
 		ok(!world.isPopulatedAt(1,2));
 	})
-	module('world evolve')
-	test('keeps cells with 2 neighbors alive', function() {
-		var world = World.create();
-		world.spawn(2,2);
-		world.spawn(2,3);
-		world.spawn(2,4);
-		world.evolve();
-		ok(world.isPopulatedAt(2,3));
-	});
-	
-	test('keeps cells with 3 neighbors alive', function() {
-		var world = World.create();
-		world.spawn(1,3);
-		world.spawn(2,2);
-		world.spawn(2,3);
-		world.spawn(2,4);
-		world.evolve();
-		ok(world.isPopulatedAt(2,3));
-	});
-	
-	test('kills cells with less than 2 neighbors', function() {
-		var world = World.create();
-		world.spawn(1,3);
-		world.spawn(2,3);
-		world.evolve();
-		ok(!world.isPopulatedAt(2,3));
-	});
-	test('kills cells with > than 3 neighbors', function() {
-		var world = World.create();
-		world.spawn(1,3);
-		world.spawn(2,3);
-		world.spawn(3,3);
-		world.spawn(2,2);
-		world.spawn(2,4);
-		world.evolve();
-		ok(!world.isPopulatedAt(2,3));
-	});
-	test('brings cells with 3 neighbors to life', function() {
-		var world = World.create();
-		world.spawn(1,3);
-		world.spawn(2,2);
-		world.spawn(2,4);
-		world.evolve();
-		ok(world.isPopulatedAt(2,3));
-	})
+
 	
 	module('spawn');
 });

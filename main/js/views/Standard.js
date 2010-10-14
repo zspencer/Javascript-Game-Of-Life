@@ -1,21 +1,19 @@
 require.def(function(){
-    var CELL_SIZE = 10;
+    var CELL_SIZE = 5;
     var GameViewObject = function(){
     };
     var prototype = {
         context: null,
         backgroundColor: "#000",
-		foregroundColor: "#0F0",
-        render: function(cells){
-            if (cells == undefined) {
+        foregroundColor: "#0F0",
+        render: function(world){
+            if (world.cells == undefined) {
                 return;
             }
             this.clear();
             view = this;
-            jQuery.each(cells, function(x, row){
-                jQuery.each(row, function(y, lives){
-                    view.drawCell(x, y);
-                });
+            world.visitCells(function(x, y){
+                view.drawCell(x, y);
             });
             
         },
@@ -48,8 +46,8 @@ require.def(function(){
                 throw "Must give us a selector to get the canvas object";
             }
             
-            height = height == null ? 200 : height*CELL_SIZE;
-            width = width == null ? 200 : width*CELL_SIZE;
+            height = height == null ? 200 : height * CELL_SIZE;
+            width = width == null ? 200 : width * CELL_SIZE;
             
             var object = new GameViewObject();
             object.init(canvasLocator, height, width);

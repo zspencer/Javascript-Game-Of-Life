@@ -47,21 +47,10 @@ require.def(function(){
 				}
 			}
         },
-        evolve: function(){
-            this.trace();
-            var self = this;
-			var newWorld = WorldObject.create();
-            self.visitCells(function(x, y) {
-            	if(self.cellShouldLive(x,y)) {
-					newWorld.spawn(x,y);
-				}
-            });
-			self.cells = newWorld.cells;
-        },
         getNeighbors: function(x, y){
             var neighbors = WorldObject.create();
             var self = this;
-            this.visitAdjacentCells(x, y, function(adjacentX, adjacentY){
+            this.visitNeighbors(x, y, function(adjacentX, adjacentY){
                 neighbors.setCell(adjacentX, adjacentY, self.isPopulatedAt(adjacentX, adjacentY));
             });
             return neighbors.cells;
@@ -76,7 +65,7 @@ require.def(function(){
         shouldIncrementNeighborCount: function(x, y, currentX, currentY){
             return !this.cellsAreAtTheSameLocation(x, y, currentX, currentY) && this.isPopulatedAt(currentX, currentY)
         },
-        visitAdjacentCells: function(x, y, callback){
+        visitNeighbors: function(x, y, callback){
             x = parseInt(x);
             y = parseInt(y);
             var currentX = x - 1;
@@ -92,20 +81,21 @@ require.def(function(){
         countNeighbors: function(x, y){
             var count = 0;
             var self = this;
-            self.visitAdjacentCells(x, y, function(adjacentX, adjacentY){
+            self.visitNeighbors(x, y, function(adjacentX, adjacentY){
                 if (self.shouldIncrementNeighborCount(x, y, adjacentX, adjacentY)) {
                     count++;
                 }
             });
             return count;
         },
-        trace: function(){
+        addLiveCellsNeighborsToTheWorld: function(){
             var world = this;
 			this.visitCells(function(x,y) {
-				var neighbors = world.getNeighbors(x, y);
-                jQuery.extend(true, world.cells, neighbors);
+				var neighbors = world.visitNeighbors(x,y, function(neighborX, neighborY) {
+					world.setCell(neighborX, neighborY, world.isPopulatedAt(neighborX, neighborY));
+				});
+                
 			})
-            this.cells = world.cells;
         },
         init: function(){
             this.cells = {};
