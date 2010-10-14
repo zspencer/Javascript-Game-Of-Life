@@ -23,7 +23,8 @@
 	});
 	test('does not draw a pixel at 1,6 when a game doesn\'t have a cell at 1,6', function() {
 		var view = GameView.create("#gameBoard");
-		view.render({});
+		var world = World.create();
+		view.render(world);
 		ok(!view.cellIsAt(1,6));
 	});
 	test('clears the game board', function() {

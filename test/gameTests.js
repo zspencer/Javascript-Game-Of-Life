@@ -71,8 +71,7 @@ require.def(['GameOfLife'],function(Game) {
 	module('game run');
 	test('calls tick once', function() {
 		var game = Game.create('#gameBoard');
-		
-		
+		game.world.randomize = jQuery.noop;
 		game.tick = function() {
 			ok(true,'yay!');
 		}
@@ -80,9 +79,15 @@ require.def(['GameOfLife'],function(Game) {
 		game.run();
 		
 	});
-	
+	test('calls randomize', function() {
+		var game = Game.create('#gameBoard');
+		game.world.randomize = function() { ok(true);}
+		expect(1);
+		game.run();
+	});
 	test('calls setInterval', function() {
 		var game = Game.create('#gameBoard');
+		game.world.randomize = jQuery.noop;
 		setInterval = function() { ok(true); }
 		expect(1);
 		game.run();

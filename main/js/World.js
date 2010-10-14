@@ -1,4 +1,4 @@
-require.def(function(){
+require.def(['Cell'],function(Cell){
     var WorldObject = function(){
     }
     var prototype = {
@@ -9,13 +9,8 @@ require.def(function(){
             this.setCell(x, y, false);
         },
         isPopulatedAt: function(x, y){
-            this.initializeRow(x);
-            return (!this.cells[x][y]) ? false : true;
-        },
-        initializeRow: function(x){
-            if (this.cells[x] == null) {
-                this.cells[x] = {};
-            }
+            if (!this.cells[x]) { return false; }
+			return this.cells[x][y];
         },
 		randomize: function(height, width) {
 			var x = 10; var y =10;
@@ -43,7 +38,7 @@ require.def(function(){
         visitCells: function(callback){
 			for(var x in this.cells) {
 				for(var y in this.cells[x]) {
-					callback(x,y);
+					callback(x,y);	
 				}
 			}
         },
@@ -56,7 +51,7 @@ require.def(function(){
             return neighbors.cells;
         },
         setCell: function(x, y, life){
-            this.initializeRow(x);
+			if(this.cells[x]==undefined) {this.cells[x]=[]}
             this.cells[x][y] = life;
         },
         cellsAreAtTheSameLocation: function(x1, y1, x2, y2){
@@ -87,16 +82,7 @@ require.def(function(){
                 }
             });
             return count;
-        },
-        addLiveCellsNeighborsToTheWorld: function(){
-            var world = this;
-			this.visitCells(function(x,y) {
-				var neighbors = world.visitNeighbors(x,y, function(neighborX, neighborY) {
-					world.setCell(neighborX, neighborY, world.isPopulatedAt(neighborX, neighborY));
-				});
-                
-			})
-        },
+        },    
         init: function(){
             this.cells = {};
         }

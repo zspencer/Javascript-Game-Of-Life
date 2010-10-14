@@ -92,14 +92,19 @@
 		equals(world.countNeighbors(3,5),8);
 	});
 	module('world isPopulatedAt');
-	test('returns true when a cell is populated', function() {
+	test('returns true when a cell is populated and exists', function() {
 		var world = World.create();
 		world.spawn(3,5);
 		ok(world.isPopulatedAt(3,5));
 	});
-	test('returns false when a cell is not populated', function() {
+	test('returns false when a cell does not exist', function() {
 		var world = World.create();
 		ok(!world.isPopulatedAt(1,2));
+	});
+	test('returns false when a cell exists but  is dead',function() {
+		var world = World.create();
+		world.kill(3,5);
+		ok(!world.isPopulatedAt(3,5));
 	})
 
 	

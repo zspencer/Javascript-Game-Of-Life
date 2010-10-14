@@ -1,5 +1,5 @@
 require.def(function(){
-    var CELL_SIZE = 5;
+    var CELL_SIZE = 2;
     var GameViewObject = function(){
     };
     var prototype = {
@@ -7,10 +7,10 @@ require.def(function(){
         backgroundColor: "#000",
         foregroundColor: "#0F0",
         render: function(world){
+			this.clear();
             if (world.cells == undefined) {
                 return;
             }
-            this.clear();
             view = this;
             world.visitCells(function(x, y){
                 view.drawCell(x, y);

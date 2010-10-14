@@ -7,7 +7,9 @@ require({
 	}, 
 	['tests/gameTests',
 	 'tests/viewTests',
-	 'tests/worldTests']
+	 'tests/worldTests',
+	 'tests/cellTests'
+	 ]
 );
 
 setInterval = function() { }
