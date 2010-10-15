@@ -9,22 +9,25 @@ require.def(function(){
             this.setCell(x, y, false);
         },
         isPopulatedAt: function(x, y){
-            if (!this.cells[x]) { return false; }
-			return this.cells[x][y];
+            if (!this.cells[x]) {
+                return false;
+            }
+            return this.cells[x][y];
         },
-		randomize: function(height, width) {
-			var x = 10; var y =10;
-			while(x < width-10) {
-				while(y < height-10) {
-					if(Math.floor(Math.random()*2)==1) {
-						this.spawn(x,y);
-					}				
-					y++;
-				}
-				y=10;
-				x++;
-			}
-		},
+        randomize: function(height, width){
+            var x = 10;
+            var y = 10;
+            while (x < width - 10) {
+                while (y < height - 10) {
+                    if (Math.floor(Math.random() * 2) == 1) {
+                        this.spawn(x, y);
+                    }
+                    y++;
+                }
+                y = 10;
+                x++;
+            }
+        },
         cellShouldLive: function(x, y){
             var neighborCount = this.countNeighbors(x, y);
             if (neighborCount < 2 || neighborCount > 3) {
@@ -36,11 +39,11 @@ require.def(function(){
             return this.isPopulatedAt(x, y);
         },
         visitCells: function(callback){
-			for(var x in this.cells) {
-				for(var y in this.cells[x]) {
-					callback(x,y);	
-				}
-			}
+            for (var x in this.cells) {
+                for (var y in this.cells[x]) {
+                    callback(x, y);
+                }
+            }
         },
         getNeighbors: function(x, y){
             var neighbors = WorldObject.create();
@@ -51,7 +54,9 @@ require.def(function(){
             return neighbors.cells;
         },
         setCell: function(x, y, life){
-			if(this.cells[x]==undefined) {this.cells[x]=[]}
+            if (this.cells[x] == undefined) {
+                this.cells[x] = []
+            }
             this.cells[x][y] = life;
         },
         cellsAreAtTheSameLocation: function(x1, y1, x2, y2){
@@ -82,7 +87,7 @@ require.def(function(){
                 }
             });
             return count;
-        },    
+        },
         init: function(){
             this.cells = {};
         }

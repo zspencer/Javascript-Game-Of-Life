@@ -7,7 +7,7 @@ require.def(function(){
         backgroundColor: "#000",
         foregroundColor: "#0F0",
         render: function(world){
-			this.clear();
+            this.clear();
             if (world.cells == undefined) {
                 return;
             }
