@@ -1,4 +1,4 @@
-require.def(['Cell'],function(Cell){
+require.def(function(){
     var WorldObject = function(){
     }
     var prototype = {

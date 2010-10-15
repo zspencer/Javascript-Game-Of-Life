@@ -10,5 +10,5 @@ require({
 	 'tests/worldTests'
 	 ]
 );
-
+//Kill set Interval so our tests don't do crazy stuff.
 setInterval = function() { }
