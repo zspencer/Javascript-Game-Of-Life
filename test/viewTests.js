@@ -1,4 +1,4 @@
- require.def(['views/Standard', 'World'],function(GameView, World) {
+ require.def(['views/StandardCanvas', 'World'],function(GameView, World) {
 	module('canvas');
 	test('uses the selector passed in for its canvas', function() {
 		var view = GameView.create("#gameBoard");

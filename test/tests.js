@@ -7,7 +7,8 @@ require({
 	}, 
 	['tests/gameTests',
 	 'tests/viewTests',
-	 'tests/worldTests'
+	 'tests/worldTests',
+	 'tests/controlPanelTests'
 	 ]
 );
 //Kill set Interval so our tests don't do crazy stuff.

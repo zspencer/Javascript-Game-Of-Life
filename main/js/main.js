@@ -1,9 +1,12 @@
 require({
     baseUrl: "js/",
     waitSeconds: 0
-}, ['GameOfLife'], function(Game){
+}, ['GameOfLife','views/ControlPanel'], function(Game, ControlPanel){
     require.ready(function(){
-        game = Game.create('#gameBoard');
-        game.run();
+        var game = Game.create('#gameBoard',100,100);
+        game.start();
+		var controlPanel = ControlPanel.create(game);
+		controlPanel.bindEvents();
+		
     });
 });

@@ -1,4 +1,4 @@
-require.def(['views/Standard', 'World'], function(GameView, World){
+require.def(['views/StandardCanvas', 'World'], function(GameView, World){
     var Game = function(){
     }
     var prototype = {
@@ -6,14 +6,7 @@ require.def(['views/Standard', 'World'], function(GameView, World){
             height: 225,
             width: 360,
         },
-        init: function(canvasLocator, height, width){
-            this.settings.height = height || this.settings.height;
-			this.settings.width = width || this.settings.width;
-            this.world = World.create();
-            this.view = GameView.create(canvasLocator, this.settings.height, this.settings.width);
-        },
-        
-        evolve: function(){
+		evolve: function(){
             var self = this;
             var newWorld = World.create();
             self.world.visitCells(function(x, y){
@@ -28,14 +21,34 @@ require.def(['views/Standard', 'World'], function(GameView, World){
             });
             self.world = newWorld;
         },
-        run: function(){
-            self = this;
-            this.world.randomize(this.settings.height, this.settings.width);
-            this.tick();
-            setInterval(function(){
-                self.tick();
-            }, 100);
+        pause: function() {
+			this.isPaused = true;
+			clearInterval(this.intervalId);
+		},
+        init: function(canvasLocator, height, width){
+            this.setHeight(height);
+			this.setWidth(width);
+            this.world = World.create();
+            this.view = GameView.create(canvasLocator, this.settings.height, this.settings.width);
         },
+        
+        run: function(){
+            var self = this;
+            this.tick();
+            this.intervalId = setInterval(function(){
+                self.tick();
+            }, 1);
+        },
+		setHeight: function(height) {
+            this.settings.height = height || this.settings.height;
+		},
+		setWidth: function(width) {
+            this.settings.width = width || this.settings.width;	
+		},
+		start: function() {
+			this.world.randomize(this.settings.height, this.settings.width);
+			this.run();
+		},
         tick: function(){
             this.evolve();
             this.view.render(this.world);

@@ -62,9 +62,6 @@ require.def(function(){
         cellsAreAtTheSameLocation: function(x1, y1, x2, y2){
             return (x1 == x2 && y1 == y2);
         },
-        shouldIncrementNeighborCount: function(x, y, currentX, currentY){
-            return !this.cellsAreAtTheSameLocation(x, y, currentX, currentY) && this.isPopulatedAt(currentX, currentY)
-        },
         visitNeighbors: function(x, y, callback){
             x = parseInt(x);
             y = parseInt(y);
@@ -72,7 +69,9 @@ require.def(function(){
             while (currentX <= x + 1) {
                 var currentY = y - 1;
                 while (currentY <= y + 1) {
-                    callback(currentX, currentY);
+                    if (!this.cellsAreAtTheSameLocation(x, y, currentX, currentY)) {
+                        callback(currentX, currentY);
+                    }
                     currentY++;
                 }
                 currentX++;
@@ -82,7 +81,7 @@ require.def(function(){
             var count = 0;
             var self = this;
             self.visitNeighbors(x, y, function(adjacentX, adjacentY){
-                if (self.shouldIncrementNeighborCount(x, y, adjacentX, adjacentY)) {
+                if (self.isPopulatedAt(adjacentX, adjacentY)) {
                     count++;
                 }
             });
