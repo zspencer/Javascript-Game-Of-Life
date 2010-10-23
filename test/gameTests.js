@@ -24,8 +24,8 @@ require.def(['GameOfLife'], function(Game){
     });
     test('allows you pass in grid height+width', function(){
         var game = Game.create('#gameBoard', 100, 150);
-        equals(game.settings.height,100);
-        equals(game.settings.width,150);
+        equals(game.settings.height, 100);
+        equals(game.settings.width, 150);
     })
     
     module('game evolve')
@@ -94,14 +94,16 @@ require.def(['GameOfLife'], function(Game){
         expect(1);
         game.run();
     });
-	test('captures the interval from setInterval', function() {
-		var game = Game.create('#gameBoard');
-		game.world.randomize = jQuery.noop;
-		setInterval = function() { return 1; }
-		game.run();
-		equals(game.intervalId, 1);
-	});
-	module('game start');
+    test('captures the interval from setInterval', function(){
+        var game = Game.create('#gameBoard');
+        game.world.randomize = jQuery.noop;
+        setInterval = function(){
+            return 1;
+        }
+        game.run();
+        equals(game.intervalId, 1);
+    });
+    module('game start');
     test('calls randomize', function(){
         var game = Game.create('#gameBoard');
         game.world.randomize = function(){
@@ -110,17 +112,19 @@ require.def(['GameOfLife'], function(Game){
         expect(1);
         game.start();
     });
-	test('calls run', function() {
-		var game = Game.create('#gameBoard');
-		game.run = function() { ok(true); }
-		expect(1);
-		game.start();
-	})
-	
-	
-	
+    test('calls run', function(){
+        var game = Game.create('#gameBoard');
+        game.run = function(){
+            ok(true);
+        }
+        expect(1);
+        game.start();
+    })
+    
+    
+    
     module('game tick');
-   
+    
     test('evolves the world', function(){
         var game = Game.create('#gameBoard');
         expect(1);
@@ -129,7 +133,7 @@ require.def(['GameOfLife'], function(Game){
         }
         game.tick();
     });
-	
+    
     test('renders the world', function(){
         var game = Game.create('#gameBoard');
         expect(1);
@@ -138,26 +142,26 @@ require.def(['GameOfLife'], function(Game){
         }
         game.tick();
     });
-
-    module("game pause")    
+    
+    module("game pause")
     test('sets the game to a paused state', function(){
         var game = Game.create('#asdf')
         game.pause();
         ok(game.isPaused);
     });
-	test('clears the interval', function() { 
-	   var game = Game.create('#asdf');
-	   game.intervalId = 1234;
-	   clearInterval = function(intervalId) {
-	       equals(1234, intervalId);
-	   }
-	   expect(1);
-	   game.pause();
-	   
-	});
-	
-
-	
-
+    test('clears the interval', function(){
+        var game = Game.create('#asdf');
+        game.intervalId = 1234;
+        clearInterval = function(intervalId){
+            equals(1234, intervalId);
+        }
+        expect(1);
+        game.pause();
+        
+    });
+    
+    
+    
+    
     
 });
