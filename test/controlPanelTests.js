@@ -37,6 +37,15 @@ require.def(['views/ControlPanel', 'GameOfLife'], function(ControlPanel, GameOfL
         game.start = function(){
             ok(true);
         }
+        game.pause = jQuery.noop;
+        var cp = ControlPanel.create(game);
+        expect(1);
+        cp.handleRestartEvent();
+    });
+    test('pauses the game', function() {
+        var game = GameOfLife.create('#asdf');
+        game.start = jQuery.noop;
+        game.pause = function() { ok(true); }
         var cp = ControlPanel.create(game);
         expect(1);
         cp.handleRestartEvent();

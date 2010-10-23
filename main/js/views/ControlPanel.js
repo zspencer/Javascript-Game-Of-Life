@@ -21,6 +21,7 @@ require.def(function(){
             this.game.run();
         },
         handleRestartEvent: function(){
+            this.game.pause();
             this.game.start();
         }
     };
