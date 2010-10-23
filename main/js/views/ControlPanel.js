@@ -10,6 +10,9 @@ require.def(function(){
             jQuery('#resume').click(function(){
                 self.handleResumeEvent();
             });
+            jQuery('#restart').click(function(){
+                self.handleRestartEvent();
+            });
         },
         handlePauseEvent: function(){
             this.game.pause();
@@ -18,7 +21,7 @@ require.def(function(){
             this.game.run();
         },
         handleRestartEvent: function(){
-            this.game.restart();
+            this.game.start();
         }
     };
     ControlPanel.prototype = prototype;

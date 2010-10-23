@@ -31,7 +31,9 @@ require.def(['views/StandardCanvas', 'World'], function(GameView, World){
             this.world = World.create();
             this.view = GameView.create(canvasLocator, this.settings.height, this.settings.width);
         },
-        
+        randomize: function() {
+            this.world.randomize(this.settings.height, this.settings.width);
+        },
         run: function(){
             var self = this;
             this.tick();
@@ -46,7 +48,7 @@ require.def(['views/StandardCanvas', 'World'], function(GameView, World){
             this.settings.width = width || this.settings.width;
         },
         start: function(){
-            this.world.randomize(this.settings.height, this.settings.width);
+            this.randomize();
             this.run();
         },
         tick: function(){

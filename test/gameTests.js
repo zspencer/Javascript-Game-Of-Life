@@ -67,13 +67,23 @@ require.def(['GameOfLife'], function(Game){
         ok(!game.world.isPopulatedAt(2, 3));
     });
     test('brings cells with 3 neighbors to life', function(){
-        var game = Game.create('#asdf')
+        var game = Game.create('#asdf');
         game.world.spawn(1, 3);
         game.world.spawn(2, 2);
         game.world.spawn(2, 4);
         game.evolve();
         ok(game.world.isPopulatedAt(2, 3));
-    })
+    });
+    module('game randomize');
+    test('calls world randomize', function() {
+        var game = Game.create('#asdf',100,150);
+        game.world.randomize = function(height,width) {
+            equals(100,height);
+            equals(150,width);
+        }
+        expect(2);
+        game.randomize();
+    });
     module('game run');
     test('calls tick once', function(){
         var game = Game.create('#gameBoard');
@@ -112,6 +122,7 @@ require.def(['GameOfLife'], function(Game){
         expect(1);
         game.start();
     });
+
     test('calls run', function(){
         var game = Game.create('#gameBoard');
         game.run = function(){
@@ -119,8 +130,7 @@ require.def(['GameOfLife'], function(Game){
         }
         expect(1);
         game.start();
-    })
-    
+    });
     
     
     module('game tick');

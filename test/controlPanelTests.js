@@ -34,7 +34,7 @@ require.def(['views/ControlPanel', 'GameOfLife'], function(ControlPanel, GameOfL
     module('ControlPanel handleRestartEvent');
     test('restarts the game world', function(){
         var game = GameOfLife.create('#asdf');
-        game.restart = function(){
+        game.start = function(){
             ok(true);
         }
         var cp = ControlPanel.create(game);
@@ -64,8 +64,19 @@ require.def(['views/ControlPanel', 'GameOfLife'], function(ControlPanel, GameOfL
         jQuery('#resume').click();
         unbindEvents();
     });
+    test('binds an event to the restart button', function() {
+        var cp = ControlPanel.create();
+        cp.handleRestartEvent = function(){
+            ok(true);
+        }
+        cp.bindEvents();
+        expect(1);
+        jQuery('#restart').click();
+        unbindEvents();
+    });
     function unbindEvents(){
         jQuery('#pause').unbind();
+        jQuery('#restart').unbind();
         jQuery('#resume').unbind();
     }
     
