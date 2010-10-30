@@ -18,6 +18,7 @@ require.def(function(){
             this.game.pause();
         },
         handleResumeEvent: function(){
+            this.game.pause();
             this.game.run();
         },
         handleRestartEvent: function(){

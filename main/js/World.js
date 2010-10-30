@@ -15,16 +15,16 @@ require.def(function(){
             return this.cells[x][y];
         },
         randomize: function(height, width){
-            var x = 10;
-            var y = 10;
-            while (x < width - 10) {
-                while (y < height - 10) {
+            var x = 0;
+            var y = 0;
+            while (x < width) {
+                while (y < height) {
                     if (Math.floor(Math.random() * 2) == 1) {
                         this.spawn(x, y);
                     }
                     y++;
                 }
-                y = 10;
+                y = 0;
                 x++;
             }
         },
