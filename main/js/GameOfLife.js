@@ -10,16 +10,21 @@ require.def(['views/StandardCanvas', 'World'], function(GameView, World){
             var self = this;
             var newWorld = World.create();
             self.world.visitCells(function(x, y){
-                newWorld = self.populateSurvivingCells(self.world, newWorld,x,y);
-                self.world.visitNeighbors(x, y, function(neighborX, neighborY){
-                    if (self.world.cellShouldLive(neighborX, neighborY)) {
-                        newWorld.spawn(neighborX, neighborY);
-                    }
-                });
+                newWorld = self.populateSurvivingCells(self.world, newWorld, x, y);
+                newWorld = self.bringNeighboringCellsToLife(self.world, newWorld, x, y);
+                
             });
             self.world = newWorld;
         },
-        populateSurvivingCells: function(oldWorld, newWorld,x,y){
+        bringNeighboringCellsToLife: function(world, newWorld, x, y){
+            world.visitNeighbors(x, y, function(neighborX, neighborY){
+                if (world.cellShouldLive(neighborX, neighborY)) {
+                    newWorld.spawn(neighborX, neighborY);
+                }
+            });
+            return newWorld;   
+        },
+        populateSurvivingCells: function(oldWorld, newWorld, x, y){
             if (oldWorld.cellShouldLive(x, y)) {
                 newWorld.spawn(x, y);
             }
