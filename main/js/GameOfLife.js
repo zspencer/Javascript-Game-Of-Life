@@ -19,7 +19,7 @@ require.def(['views/StandardCanvas', 'World'], function(GameView, World){
         bringNeighboringCellsToLife: function(world, newWorld, x, y){
             world.visitNeighbors(x, y, function(neighborX, neighborY){
                 if (world.cellShouldLive(neighborX, neighborY)) {
-                    newWorld.spawn(neighborX, neighborY);
+                  newWorld.spawn(neighborX, neighborY);
                 }
             });
             return newWorld;   
